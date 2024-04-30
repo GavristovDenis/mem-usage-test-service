@@ -25,19 +25,20 @@ export const Graph = () => {
     }
   };
   const filterData = () => {
-    setFilteredData(
-      data.filter(
-        (i) =>
-          dayjs(i.ts).format("DD/MM/YYYY") >=
-            dayjs(firstDate).format("DD/MM/YYYY") &&
-          dayjs(i.ts).format("DD/MM/YYYY") <=
-            dayjs(secondDate).format("DD/MM/YYYY")
-      )
-    );
+    if (firstDate && secondDate) {
+      setFilteredData(
+        data.filter(
+          (i) =>
+            dayjs(i.ts) >= dayjs(firstDate) && dayjs(i.ts) <= dayjs(secondDate)
+        )
+      );
+    }
+    if (firstDate) {
+      setFilteredData(data.filter((i) => dayjs(i.ts) >= dayjs(firstDate)));
+    } else {
+      setFilteredData(data.filter((i) => dayjs(i.ts) <= dayjs(secondDate)));
+    }
   };
-
-  console.log(filteredData);
-  console.log(dayjs(firstDate).format("DD/MM/YYYY"));
 
   useEffect(() => {
     query();
@@ -62,11 +63,13 @@ export const Graph = () => {
                 label="От"
                 onChange={(newValue) => setFirstDate(newValue)}
                 format="DD/MM/YYYY"
+                value={firstDate}
               />
               <DatePicker
                 label="До"
                 format="DD/MM/YYYY"
                 onChange={(newValue) => setSecondDate(newValue)}
+                value={secondDate}
               />
             </DemoContainer>
           </LocalizationProvider>

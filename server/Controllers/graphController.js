@@ -1,7 +1,7 @@
 const db = require('../db')
 
 class graphController {
-    async getRam(req, res) {
+    async getRam(res) {
 
         const query = 'SELECT * FROM ram_data';
 

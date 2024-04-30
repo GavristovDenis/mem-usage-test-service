@@ -3,7 +3,7 @@ import { create } from "zustand";
 const authStore = create((set) => ({
   loggedInUser: "",
   setLoggedInUser: (newValue) => set({ loggedInUser: newValue }),
-  isLoggedIn: true,
+  isLoggedIn: null,
   setIsLoggedIn: (newValue) => set({ isLoggedIn: newValue }),
 }));
 
