@@ -15,8 +15,7 @@ class graphController {
     }
     async downloadRam(req, res) {
         const { firstDate, secondDate } = req.body
-        console.log(firstDate, secondDate)
-        const query = firstDate && secondDate ? `SELECT * from ram_dataWHERE ts >= '${firstDate}' AND ts <= '${secondDate}'` : firstDate ? `SELECT * from ram_data WHERE ts >= '${firstDate}'` : secondDate ? `SELECT * from ram_data WHERE ts <= '${secondDate}'` : `SELECT * from ram_data`
+        const query = firstDate && secondDate ? `SELECT * from ram_data WHERE ts >= '${firstDate}' AND ts <= '${secondDate}'` : firstDate ? `SELECT * from ram_data WHERE ts >= '${firstDate}'` : secondDate ? `SELECT * from ram_data WHERE ts <= '${secondDate}'` : `SELECT * from ram_data`
         try {
             const result = await db.query(query)
             const data = result.rows

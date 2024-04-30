@@ -49,10 +49,11 @@ export const Graph = () => {
         ? dayjs(firstDate).format("YYYY-MM-DD") + "T00:00:00.000Z"
         : "",
       secondDate: secondDate
-        ? dayjs(secondDate).format("YYYY-MM-DD").add(1, "day") +
+        ? dayjs(secondDate).add(1, "day").format("YYYY-MM-DD") +
           "T00:00:00.000Z"
         : "",
     };
+    console.log(secondDate);
     const res = await axios.post(
       "http://localhost:8000/graph/downloadRam",
       data,

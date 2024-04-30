@@ -25,11 +25,10 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      display: "false",
+      display: false,
     },
   },
 };
-
 export const ChartComponent = ({ array }) => {
   const labels = array.map((i) => dayjs(i.ts).format("DD/MM/YYYY"));
 
@@ -37,7 +36,6 @@ export const ChartComponent = ({ array }) => {
     labels,
     datasets: [
       {
-        label: "Данные",
         data: array.map((i) => parseInt(i.mem_usage)),
         borderColor: "#1D2533",
         backgroundColor: "#4075ff",
