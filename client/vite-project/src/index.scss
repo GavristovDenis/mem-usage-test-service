@@ -134,7 +134,9 @@ body {
 }
 
 .graph_chart_container {
-  height: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
 }
 
 .graph_date_filter {
@@ -144,4 +146,12 @@ body {
   height: 200px;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.graph_download_button {
+  height: 50px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 5px;
 }

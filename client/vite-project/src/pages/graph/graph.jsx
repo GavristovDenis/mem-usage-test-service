@@ -29,17 +29,45 @@ export const Graph = () => {
       setFilteredData(
         data.filter(
           (i) =>
-            dayjs(i.ts) >= dayjs(firstDate) && dayjs(i.ts) <= dayjs(secondDate)
+            dayjs(i.ts) >= dayjs(firstDate) &&
+            dayjs(i.ts) <= dayjs(secondDate).add(1, "day")
         )
       );
-    }
-    if (firstDate) {
+    } else if (firstDate) {
       setFilteredData(data.filter((i) => dayjs(i.ts) >= dayjs(firstDate)));
+    } else if (secondDate) {
+      setFilteredData(
+        data.filter((i) => dayjs(i.ts) <= dayjs(secondDate).add(1, "day"))
+      );
     } else {
-      setFilteredData(data.filter((i) => dayjs(i.ts) <= dayjs(secondDate)));
+      return;
     }
   };
-
+  const download = async () => {
+    const data = {
+      firstDate: firstDate
+        ? dayjs(firstDate).format("YYYY-MM-DD") + "T00:00:00.000Z"
+        : "",
+      secondDate: secondDate
+        ? dayjs(secondDate).format("YYYY-MM-DD").add(1, "day") +
+          "T00:00:00.000Z"
+        : "",
+    };
+    const res = await axios.post(
+      "http://localhost:8000/graph/downloadRam",
+      data,
+      {
+        responseType: "blob",
+      }
+    );
+    const blob = new Blob([res.data], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "requests.xlsx");
+    document.body.appendChild(link);
+    link.click();
+  };
   useEffect(() => {
     query();
   }, []);
@@ -90,6 +118,22 @@ export const Graph = () => {
         </div>
         <div className="graph_chart_container">
           <ChartComponent array={filteredData} />
+        </div>
+        <div className="graph_download_button">
+          <Button
+            onClick={download}
+            variant="contained"
+            sx={{
+              width: "300px",
+              height: "50px",
+              bgcolor: "#101828",
+              "&:hover": {
+                bgcolor: "#152544",
+              },
+            }}
+          >
+            Скачать данные в виде Excel
+          </Button>
         </div>
       </div>
     </div>

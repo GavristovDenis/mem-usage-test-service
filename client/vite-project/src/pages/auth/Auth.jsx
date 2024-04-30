@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authStore from "../../consts/authStore";
 import axios from "axios";
@@ -35,6 +35,14 @@ export const Auth = () => {
       handleLogin(event);
     }
   };
+
+  useEffect(() => {
+    setIsError(false);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="login_page">
       <div className={isError ? "login_container_error" : "login_container"}>
